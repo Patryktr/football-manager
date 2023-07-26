@@ -33,7 +33,7 @@ public class TeamFacade {
 
     public void update(UpdateTeamDto updateTeamDto) {
         Team team = teamRepository.findById(updateTeamDto.id())
-                .orElseThrow(() -> new RuntimeException("you can't update a team,because it isn't exist"));
+                .orElseThrow(TeamNotFoundException::new);
         team.applyPathChanges(updateTeamDto);
         teamRepository.save(team);
     }
