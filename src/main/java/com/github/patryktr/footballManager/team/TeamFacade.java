@@ -15,12 +15,12 @@ public class TeamFacade {
 
 
     public void delete(long id) {
-        teamRepository.deleteTeamById(id);
+        teamRepository.deleteById(id);
     }
 
     public void create(CreateNewTeamDto createNewTeamDto) {
         teamRepository.findByName(createNewTeamDto.getName()).ifPresent(team -> {
-            throw new RuntimeException("you can't create a team,cause it exist");
+            throw new RuntimeException("you can't create a team,because it exist");
         });
         Team team = Team.of(createNewTeamDto);
         teamRepository.save(team);
@@ -32,10 +32,10 @@ public class TeamFacade {
     }
 
     public void update(UpdateTeamDto updateTeamDto) {
-        Team team = teamRepository.findById(updateTeamDto.id()).orElseThrow(() -> {
-            throw new RuntimeException("you can't update a team,cause it isn't exist");
-        });
+        Team team = teamRepository.findById(updateTeamDto.id())
+                .orElseThrow(() -> new RuntimeException("you can't update a team,because it isn't exist"));
         team.applyPathChanges(updateTeamDto);
+        teamRepository.save(team);
     }
 
     public List<TeamViewDto> getAll() {
