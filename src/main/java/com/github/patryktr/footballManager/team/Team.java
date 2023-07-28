@@ -1,5 +1,8 @@
 package com.github.patryktr.footballManager.team;
 
+import com.github.patryktr.footballManager.team.model.CreateNewTeamDto;
+import com.github.patryktr.footballManager.team.model.TeamViewDto;
+import com.github.patryktr.footballManager.team.model.UpdateTeamDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,7 +11,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Team {
+class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

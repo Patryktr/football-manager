@@ -1,5 +1,8 @@
 package com.github.patryktr.footballManager.team;
 
+import com.github.patryktr.footballManager.team.model.CreateNewTeamDto;
+import com.github.patryktr.footballManager.team.model.TeamViewDto;
+import com.github.patryktr.footballManager.team.model.UpdateTeamDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +30,9 @@ public class TeamFacade {
 
     }
 
-    public Team findTeamByName(String name) {
-        return teamRepository.findByName(name).orElse(null);
+    public TeamViewDto findTeamByName(String name) {
+        Team team = teamRepository.findByName(name).orElse(null);
+        return team == null ? null : team.toViewDto();
     }
 
     public void update(UpdateTeamDto updateTeamDto) {

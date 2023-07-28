@@ -1,4 +1,4 @@
-package com.github.patryktr.footballManager.user;
+package com.github.patryktr.footballManager.user.model;
 
 import lombok.Getter;
 

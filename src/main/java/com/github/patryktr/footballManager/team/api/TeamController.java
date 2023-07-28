@@ -1,5 +1,9 @@
-package com.github.patryktr.footballManager.team;
+package com.github.patryktr.footballManager.team.api;
 
+import com.github.patryktr.footballManager.team.*;
+import com.github.patryktr.footballManager.team.model.CreateNewTeamDto;
+import com.github.patryktr.footballManager.team.model.TeamViewDto;
+import com.github.patryktr.footballManager.team.model.UpdateTeamDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +29,7 @@ public class TeamController {
     }
 
     @GetMapping(value = "/byName")
-    public Team getTeamByName(@RequestParam String name) {
+    public TeamViewDto getTeamByName(@RequestParam String name) {
         return teamFacade.findTeamByName(name);
     }
 

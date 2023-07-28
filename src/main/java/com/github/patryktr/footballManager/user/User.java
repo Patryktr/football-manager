@@ -1,5 +1,8 @@
 package com.github.patryktr.footballManager.user;
 
+import com.github.patryktr.footballManager.user.model.CreateNewUserDto;
+import com.github.patryktr.footballManager.user.model.UpdatePasswordUserDto;
+import com.github.patryktr.footballManager.user.model.UserViewDto;
 import jakarta.persistence.*;
 
 @Entity
@@ -30,7 +33,16 @@ public class User {
         return new User(null, createNewUserDto.getName(), createNewUserDto.getSurname(), createNewUserDto.getLogin(),
                 createNewUserDto.getPassword(), createNewUserDto.getEmail());
     }
+
     public UserViewDto toViewDto() {
-        return new UserViewDto(id,name,surname);
+        return new UserViewDto(id, name, surname);
+    }
+
+    public void applyPathChanges(UpdatePasswordUserDto updatePasswordUserDto) {
+        if (updatePasswordUserDto.getId() != null) {
+            if (updatePasswordUserDto.getPassword().equals(password)) {
+                this.password = updatePasswordUserDto.getNewPassword();
+            }
+        }
     }
 }
