@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TeamFacade {
+    public static final String CANNOT_CREATE_TEAM_WITH_SAME_NAME_EXCEPTION = "you can't create a team,because it exist";
     private final TeamRepository teamRepository;
 
     public TeamFacade(TeamRepository teamRepository) {
@@ -22,8 +23,8 @@ public class TeamFacade {
     }
 
     public void create(CreateNewTeamDto createNewTeamDto) {
-        teamRepository.findByName(createNewTeamDto.getName()).ifPresent(team -> {
-            throw new RuntimeException("you can't create a team,because it exist");
+        teamRepository.findByName(createNewTeamDto.name()).ifPresent(team -> {
+            throw new RuntimeException(CANNOT_CREATE_TEAM_WITH_SAME_NAME_EXCEPTION);
         });
         Team team = Team.of(createNewTeamDto);
         teamRepository.save(team);

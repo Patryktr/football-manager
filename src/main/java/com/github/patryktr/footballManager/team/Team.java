@@ -32,7 +32,7 @@ class Team {
     }
 
     public static Team of(CreateNewTeamDto createNewTeamDto) {
-        return new Team(null, createNewTeamDto.getName(), 0);
+        return new Team(null, createNewTeamDto.name(), 0);
     }
 
     public TeamViewDto toViewDto() {

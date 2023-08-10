@@ -39,7 +39,11 @@ public class UserFacade {
     }
 
     public void changePassword() {
+        ChangePasswordValidator.Result validateResult = ChangePasswordValidator.validate("1u1", "101000");
+       if (validateResult.isValid()){
 
+
+       }
     }
 
 
