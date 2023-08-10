@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.List;
 import java.util.Optional;
 
 import static com.github.patryktr.footballManager.team.TeamFacade.CANNOT_CREATE_TEAM_WITH_SAME_NAME_EXCEPTION;
@@ -18,9 +17,8 @@ class TeamFacadeTest {
     @Test
     public void shouldThrowExceptionOnTeamNameDuplicationTest() {
         //given
-        // TeamRepository teamRepository = Mockito.mock(TeamRepository.class);
-       // Mockito.when(teamRepository.findByName(DUP_NAME)).thenReturn(Optional.of(new Team()));
-        MockTeamRepository teamRepository = new MockTeamRepository();
+        TeamRepository teamRepository = Mockito.mock(TeamRepository.class);
+        Mockito.when(teamRepository.findByName(DUP_NAME)).thenReturn(Optional.of(new Team()));
         TeamFacade teamFacade = new TeamFacade(teamRepository);
         CreateNewTeamDto existingTeamDto = new CreateNewTeamDto(DUP_NAME);
 
