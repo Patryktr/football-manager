@@ -1,7 +1,10 @@
 package com.github.patryktr.footballManager.user;
 
+import com.github.patryktr.footballManager.user.exception.UserNotFoundException;
+import com.github.patryktr.footballManager.user.exception.UserWithThisEmailExistException;
 import com.github.patryktr.footballManager.user.model.CreateNewUserDto;
 import com.github.patryktr.footballManager.user.model.UserViewDto;
+import com.github.patryktr.footballManager.user.password.NewPasswordPolicy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +13,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserFacade {
     private final UserRepository userRepository;
+    private final UserCredentialRepository userCredentialRepository;
+    private final NewPasswordPolicy newPasswordPolicy;
 
-    public UserFacade(UserRepository userRepository) {
+    public UserFacade(UserRepository userRepository, UserCredentialRepository userCredentialRepository, NewPasswordPolicy newPasswordPolicy) {
         this.userRepository = userRepository;
+        this.userCredentialRepository = userCredentialRepository;
+        this.newPasswordPolicy = newPasswordPolicy;
     }
 
     public void delete(long id) {
@@ -21,7 +28,7 @@ public class UserFacade {
 
     public void create(CreateNewUserDto createNewUserDto) {
         userRepository.findByEmail(createNewUserDto.getEmail()).ifPresent(user -> {
-            throw new UserNotFoundException();
+            throw new UserWithThisEmailExistException();
         });
         User user = User.of(createNewUserDto);
         userRepository.save(user);
@@ -38,13 +45,9 @@ public class UserFacade {
         return user == null ? null : user.toViewDto();
     }
 
-    public void changePassword() {
-        ChangePasswordValidator.Result validateResult = ChangePasswordValidator.validate("1u1", "101000");
-        if (validateResult.isValid()) {
-
-
-        }
+    public void changePassword(String login, String oldPassword, String newPassword) {
+        UserCredential userCredential = userCredentialRepository.findById(login).orElseThrow(UserNotFoundException::new);
+        userCredential.applyPathChanges(oldPassword, newPassword, newPasswordPolicy);
+        userCredentialRepository.save(userCredential);
     }
-
-
 }

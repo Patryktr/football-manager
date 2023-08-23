@@ -2,7 +2,10 @@ package com.github.patryktr.footballManager;
 
 
 import com.github.patryktr.footballManager.team.TeamNotFoundException;
-import com.github.patryktr.footballManager.user.UserNotFoundException;
+import com.github.patryktr.footballManager.user.exception.EmptyPasswordException;
+import com.github.patryktr.footballManager.user.exception.IncorrectPasswordException;
+import com.github.patryktr.footballManager.user.exception.SamePasswordException;
+import com.github.patryktr.footballManager.user.exception.UserWithThisEmailExistException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +17,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {UserNotFoundException.class, TeamNotFoundException.class})
+    @ExceptionHandler(value = {
+            UserWithThisEmailExistException.class,
+            SamePasswordException.class,
+            IncorrectPasswordException.class,
+            EmptyPasswordException.class,
+            TeamNotFoundException.class
+    })
+
     protected ResponseEntity<Object> handleKnowException(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
