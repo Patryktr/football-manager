@@ -14,6 +14,9 @@ public class SimpleNewPasswordPolicy implements NewPasswordPolicy {
 
     @Override
     public ValidationResult validate(String password) {
+        if (password == null) {
+            return ValidationResult.error(YOUR_PASSWORD_IS_TOO_WEEK);
+        }
         Matcher matcher = Pattern.compile(REGEX).matcher(password);
         return matcher.find() ? ValidationResult.VALID : ValidationResult.error(YOUR_PASSWORD_IS_TOO_WEEK);
     }

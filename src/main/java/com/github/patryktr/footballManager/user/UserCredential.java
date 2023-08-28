@@ -24,11 +24,11 @@ public class UserCredential {
     }
 
     public static UserCredential of(CreateNewUserDto createNewUserDto, NewPasswordPolicy newPasswordPolicy) {
-        ValidationResult validate = newPasswordPolicy.validate(createNewUserDto.getPassword());
+        ValidationResult validate = newPasswordPolicy.validate(createNewUserDto.password());
         if (!validate.isValid()) {
             throw new IllegalArgumentException(validate.getErrorMessage());
         }
-        return new UserCredential(createNewUserDto.getLogin(), createNewUserDto.getPassword());
+        return new UserCredential(createNewUserDto.email(), createNewUserDto.password());
     }
 
     public void applyPathChanges(String oldPassword, String newPassword, NewPasswordPolicy newPasswordPolicy) {

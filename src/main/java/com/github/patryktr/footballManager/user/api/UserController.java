@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/byId")
-    public UserViewDto getAll(long id) {
+    public UserViewDto getById(long id) {
         return userFacade.findById(id);
     }
 

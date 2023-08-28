@@ -27,7 +27,7 @@ public class UserFacade {
     }
 
     public void create(CreateNewUserDto createNewUserDto) {
-        userRepository.findByEmail(createNewUserDto.getEmail()).ifPresent(user -> {
+        userRepository.findByEmail(createNewUserDto.email()).ifPresent(user -> {
             throw new UserWithThisEmailExistException();
         });
         User user = User.of(createNewUserDto);

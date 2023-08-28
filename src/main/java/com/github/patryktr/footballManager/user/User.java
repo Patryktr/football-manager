@@ -30,8 +30,8 @@ public class User {
     }
 
     public static User of(CreateNewUserDto createNewUserDto) {
-        return new User(null, createNewUserDto.getName(), createNewUserDto.getSurname(), createNewUserDto.getLogin(),
-                createNewUserDto.getEmail());
+        return new User(null, createNewUserDto.name(), createNewUserDto.surname(), createNewUserDto.login(),
+                createNewUserDto.email());
     }
 
     public UserViewDto toViewDto() {
